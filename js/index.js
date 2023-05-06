@@ -16,6 +16,8 @@ const deck = [
   "./images/refletir.svg",
 ];
 
+let selectedCards = [];
+
 buttonStart.addEventListener("click", () => {
   // o que é para acontecer quando eu clicar no botão jogar?
 
@@ -27,10 +29,68 @@ buttonStart.addEventListener("click", () => {
   // como? -> removendo a classe hide da div
   gameScrren.classList.remove("hide");
 
-
+  startGame();
 });
 
-
 function startGame() {
-    
+  // embaralhar as cartas
+  deck.sort(() => Math.random() - 0.5);
+
+  // criar as tags <img /> com o src das imagens
+  createCards();
+
+  // adicionar um eventListener em todas as cartas que tem a classe "back"
+  const cardsBack = document.querySelectorAll(".back");
+  cardsBack.forEach((card) => {
+    card.addEventListener("click", () => {
+      //escondendo a card back
+      card.classList.add("hide");
+      //mostrei a carta de trás
+      card.previousElementSibling.classList.remove("hide");
+      // adicionar a carta clicada a minha array de selecionadas
+      selectedCards.push(card.previousElementSibling);
+
+      checkPair();
+    });
+  });
+}
+
+function createCards() {
+  deck.forEach((card) => {
+    const imgTag = document.createElement("img"); // <img />
+    imgTag.setAttribute("src", card); // <img src="./images/harmonia.svg" />
+    imgTag.classList.add("hide"); // <img src="./images/harmonia.svg" class="hide" />
+    board.appendChild(imgTag);
+
+    const imgBack = document.createElement("img");
+    imgBack.setAttribute("src", "./images/back.svg");
+    imgBack.classList.add("back");
+    board.appendChild(imgBack);
+  });
+}
+
+function checkPair() {
+  if (selectedCards.length !== 2) {
+    return;
+  }
+
+  if (selectedCards[0].src === selectedCards[1].src) {
+    console.log("as cartas são iguais");
+    selectedCards = []
+    return
+  }
+
+  if (selectedCards[0].src !== selectedCards[1].src) {
+    console.log("as cartas são diferentes");
+    //adicionar a classe hide para elas
+    setTimeout(() => {
+      selectedCards[0].classList.add("hide");
+      selectedCards[1].classList.add("hide");
+
+      selectedCards[0].nextElementSibling.classList.remove("hide");
+      selectedCards[1].nextElementSibling.classList.remove("hide");
+
+      selectedCards = []
+    }, 1200);
+  }
 }
