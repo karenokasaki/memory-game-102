@@ -3,6 +3,9 @@ const homeScreen = document.querySelector("#homeScreen");
 const buttonStart = document.querySelector("#buttonStart");
 const gameScrren = document.querySelector("#gameScreen");
 const board = document.querySelector("#board");
+const winScreen = document.querySelector("#winScreen");
+const loseScreen = document.querySelector("#loseScreen");
+const livesSpan = document.querySelector("#livesSpan");
 
 // variáveis
 const deck = [
@@ -15,8 +18,8 @@ const deck = [
   "./images/projetar.svg",
   "./images/refletir.svg",
 ];
-
 let selectedCards = [];
+let lives = 2;
 
 buttonStart.addEventListener("click", () => {
   // o que é para acontecer quando eu clicar no botão jogar?
@@ -36,6 +39,9 @@ function startGame() {
   // embaralhar as cartas
   deck.sort(() => Math.random() - 0.5);
 
+  //adicionar as vidas
+  livesSpan.innerText = lives;
+
   // criar as tags <img /> com o src das imagens
   createCards();
 
@@ -43,6 +49,9 @@ function startGame() {
   const cardsBack = document.querySelectorAll(".back");
   cardsBack.forEach((card) => {
     card.addEventListener("click", () => {
+      if (selectedCards.length === 2) {
+        return;
+      }
       //escondendo a card back
       card.classList.add("hide");
       //mostrei a carta de trás
@@ -51,6 +60,8 @@ function startGame() {
       selectedCards.push(card.previousElementSibling);
 
       checkPair();
+
+      checkStatusGame();
     });
   });
 }
@@ -76,12 +87,17 @@ function checkPair() {
 
   if (selectedCards[0].src === selectedCards[1].src) {
     console.log("as cartas são iguais");
-    selectedCards = []
-    return
+    selectedCards[0].classList.add("turn")
+    selectedCards[1].classList.add("turn")
+
+    selectedCards = [];
+    return;
   }
 
   if (selectedCards[0].src !== selectedCards[1].src) {
     console.log("as cartas são diferentes");
+    lives--;
+    livesSpan.innerText = lives;
     //adicionar a classe hide para elas
     setTimeout(() => {
       selectedCards[0].classList.add("hide");
@@ -90,7 +106,26 @@ function checkPair() {
       selectedCards[0].nextElementSibling.classList.remove("hide");
       selectedCards[1].nextElementSibling.classList.remove("hide");
 
-      selectedCards = []
+      selectedCards = [];
     }, 1200);
   }
+}
+
+function checkStatusGame() {
+    //checando para saber se perdeu
+  if (lives === 0) {
+    loseScreen.classList.remove("hide");
+    board.classList.add("hide");
+  }
+
+  //checando para saber se ganhou
+  const cardsTurn = document.querySelectorAll(".turn")
+  if (cardsTurn.length === deck.length) {
+    winScreen.classList.remove("hide")
+    setTimeout(() => {
+        location.reload()
+    },1000)
+  }
+
+
 }

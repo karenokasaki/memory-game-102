@@ -5,37 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/style.css" />
+
     <title>Memory Game</title>
   </head>
   <body>
-
     <div id="homeScreen">
-        <h1>Memory game</h1>
+      <h1>Memory game</h1>
 
-        <p>Seja vem bindo. Você precisa achar as imagens iguais.</p>
+      <p>Seja vem bindo. Você precisa achar as imagens iguais.</p>
 
-        <button id="buttonStart">Jogar!</button>
-
+      <button id="buttonStart">Jogar!</button>
     </div>
 
     <div id="gameScreen" class="hide">
-        <h1>Game</h1>
+      <h1>Lives: <span id="livesSpan"></span></h1>
 
-        <div id="board">
-           <!--  
-            <img src="./images/harmonia.svg" />
-            <img src="./images/harmonia.svg" />
-            <img src="./images/poder.svg" />
-            <img src="./images/poder.svg" />
-            <img src="./images/projetar.svg" />
-            <img src="./images/projetar.svg" />
-            <img src="./images/refletir.svg" />
-            <img src="./images/refletir.svg" /> 
-        
-        -->
-        </div>
+      <div id="board"></div>
+
+      <div class="hide" id="winScreen">
+        <h1>Parabéns você ganhou! 💖👏👏👏👏</h1>
+      </div>
+
+      <div class="hide" id="loseScreen">
+        <h1>Buabuabua, você perdeu.</h1>
+        <form>
+          <button>Jogar novamente</button>
+        </form>
+      </div>
     </div>
-
 
     <script src="./js/index.js"></script>
   </body>
