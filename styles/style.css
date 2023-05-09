@@ -4,7 +4,7 @@
 }
 
 .hide {
-  display: none !important
+  display: none !important;
 }
 
 .show {
@@ -15,4 +15,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
+}
+
+.youLoose {
+  color: red;
 }
