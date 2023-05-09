@@ -19,7 +19,7 @@ const deck = [
   "./images/refletir.svg",
 ];
 let selectedCards = [];
-let lives = 2;
+let lives = 4;
 
 buttonStart.addEventListener("click", () => {
   // o que é para acontecer quando eu clicar no botão jogar?
